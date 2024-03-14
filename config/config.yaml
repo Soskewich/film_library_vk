@@ -1,0 +1,6 @@
+Server:
+  Port: 3000
+
+DatabaseConnection:
+  Attempts: 20
+  Timeout: 5
