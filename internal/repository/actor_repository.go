@@ -3,9 +3,8 @@ package repository
 import (
 	"context"
 	"fmt"
-	"github.com/Soskewich/film_library_vk/db"
 	"github.com/Soskewich/film_library_vk/internal/model"
-
+	"github.com/Soskewich/film_library_vk/pkg/db"
 	"github.com/jmoiron/sqlx"
 )
 
