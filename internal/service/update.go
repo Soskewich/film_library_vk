@@ -2,7 +2,6 @@ package service
 
 import (
 	"context"
-	"database/sql"
 	"github.com/Soskewich/film_library_vk/pkg/erru"
 	"github.com/asaskevich/govalidator"
 	"time"
@@ -22,7 +21,6 @@ func (s Service) Update(ctx context.Context, params UpdateParams) error {
 		return erru.ErrArgument{Wrapped: err}
 	}
 
-	// find todo object
 	actor, err := s.Get(ctx, params.Id)
 	if err != nil {
 		return err
@@ -35,10 +33,7 @@ func (s Service) Update(ctx context.Context, params UpdateParams) error {
 		actor.Surname = *params.Surname
 	}
 	if params.Patronymic != nil {
-		actor.Patronymic = sql.NullString{
-			String: *params.Patronymic,
-			Valid:  true,
-		}
+		actor.Patronymic = *params.Patronymic
 	}
 	if params.Birthday != nil {
 		actor.Birthday = *params.Birthday
@@ -54,7 +49,7 @@ func (s Service) Update(ctx context.Context, params UpdateParams) error {
 	// Defer a rollback in case anything fails.
 	defer tx.Rollback()
 
-	err = s.repo.Update(ctx, actor)
+	err = s.repo.UpdateActor(ctx, actor)
 	if err != nil {
 		return err
 	}

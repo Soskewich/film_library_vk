@@ -42,7 +42,7 @@ func (ar ActorRepository) CreateActor(ctx context.Context, entity *model.Actor) 
 	return db.HandleError(err)
 }
 
-func (ar ActorRepository) Update(ctx context.Context, entity model.Actor) error {
+func (ar ActorRepository) UpdateActor(ctx context.Context, entity model.Actor) error {
 	query := `UPDATE actor
                 SET name = :name, 
                     surname = :surname, 

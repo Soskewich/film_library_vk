@@ -2,7 +2,6 @@ package service
 
 import (
 	"context"
-	"database/sql"
 	"github.com/Soskewich/film_library_vk/internal/model"
 	"github.com/Soskewich/film_library_vk/pkg/erru"
 	"github.com/asaskevich/govalidator"
@@ -10,11 +9,11 @@ import (
 )
 
 type ActorParams struct {
-	Name       string    `json:"name" binding:"required"`
-	Surname    string    `json:"surname" binding:"required"`
-	Patronymic string    `json:"patronymic"`
-	Birthday   time.Time `json:"birthday"`
-	Gender     string    `json:"gender"`
+	Name       string    `valid:"required"`
+	Surname    string    `valid:"required"`
+	Patronymic string    `valid:"required"`
+	Birthday   time.Time `valid:"required"`
+	Gender     string    `valid:"required"`
 }
 
 func (s Service) CreateActor(ctx context.Context, params ActorParams) (int, error) {
@@ -30,14 +29,11 @@ func (s Service) CreateActor(ctx context.Context, params ActorParams) (int, erro
 	defer tx.Rollback()
 
 	entity := model.Actor{
-		Name:    params.Name,
-		Surname: params.Surname,
-		Patronymic: sql.NullString{
-			String: params.Patronymic,
-			Valid:  true,
-		},
-		Birthday: params.Birthday,
-		Gender:   params.Gender,
+		Name:       params.Name,
+		Surname:    params.Surname,
+		Patronymic: params.Patronymic,
+		Birthday:   params.Birthday,
+		Gender:     params.Gender,
 	}
 	err = s.repo.CreateActor(ctx, &entity)
 	if err != nil {

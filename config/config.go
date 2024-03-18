@@ -6,11 +6,8 @@ import (
 )
 
 type Config struct {
-	Database Database
-	Server   Server
-}
-type Server struct {
-	ServerPort string `envconfig:"SERVER_PORT" yaml:"Port"`
+	Database   Database
+	ServerPort string `envconfig:"SERVER_PORT" default:"80"`
 }
 
 type Database struct {
@@ -21,7 +18,7 @@ type Database struct {
 	Name     string `envconfig:"DB_NAME" required:"true"`
 }
 
-func NewConfig(configPath string) (Config, error) {
+func NewConfig() (Config, error) {
 	_ = godotenv.Load(".env")
 	cnf := Config{}
 	err := envconfig.Process("", &cnf)

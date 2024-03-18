@@ -2,8 +2,8 @@ package db
 
 import (
 	"fmt"
-
 	"github.com/jmoiron/sqlx"
+	_ "github.com/lib/pq"
 )
 
 type ConfingDB struct {
@@ -16,7 +16,7 @@ type ConfingDB struct {
 
 func Connect(cnf ConfingDB) (*sqlx.DB, error) {
 	dsn := fmt.Sprintf(
-		"host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
+		"host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
 		cnf.Host,
 		cnf.Port,
 		cnf.User,

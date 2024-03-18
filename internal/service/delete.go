@@ -16,8 +16,8 @@ func (s Service) Delete(ctx context.Context, id int) error {
 	}
 	// Defer a rollback in case anything fails.
 	defer tx.Rollback()
-	
-	err = s.repo.Update(ctx, todo)
+
+	err = s.repo.UpdateActor(ctx, todo)
 	if err != nil {
 		return err
 	}
